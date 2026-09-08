@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import {
@@ -123,6 +123,8 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
       })
       .slice(0, 10);
   }, [filteredCars]);
+
+  const featuredCar = fastestCars[0] ?? null;
 
   const scoreLimits = useMemo(() => {
     const horsepower = cars
@@ -311,7 +313,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
                 </Badge>
 
                 <span className="text-sm font-medium text-zinc-500">
-                  1965 — 2023
+                  1965 鈥?2023
                 </span>
               </div>
 
@@ -456,7 +458,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
           <Card className="border-zinc-800 bg-zinc-900/70 transition hover:-translate-y-0.5 hover:border-zinc-700">
             <CardContent className="pt-6">
               <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
-                Fastest 0–60
+                Fastest 0鈥?0
               </p>
 
               <p className="mt-3 text-3xl font-bold tracking-tight text-red-400">
@@ -486,6 +488,94 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
           </Card>
         </div>
 
+        {featuredCar && (
+          <Card
+            onClick={() => setSelectedCar(featuredCar)}
+            className="group mt-6 cursor-pointer overflow-hidden border-red-950 bg-zinc-900/70 transition hover:border-red-800"
+          >
+            <CardContent className="p-0">
+              <div className="grid md:grid-cols-[1.35fr_1fr]">
+                <div className="relative overflow-hidden p-7 md:p-9">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(239,68,68,0.16),transparent_45%)]" />
+
+                  <div className="relative">
+                    <div className="mb-5 flex items-center gap-3">
+                      <Badge className="bg-red-600 text-white hover:bg-red-600">
+                        FEATURED MACHINE
+                      </Badge>
+
+                      <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                        Fastest in current selection
+                      </span>
+                    </div>
+
+                    <p className="text-sm font-medium text-zinc-500">
+                      {featuredCar.year}
+                    </p>
+
+                    <h2 className="mt-1 text-3xl font-bold tracking-tight text-white md:text-4xl">
+                      {featuredCar.car_make} {featuredCar.car_model}
+                    </h2>
+
+                    <p className="mt-4 max-w-xl text-sm leading-6 text-zinc-400">
+                      The quickest vehicle in the current filtered dataset.
+                      Select a different manufacturer or model year and this
+                      feature updates automatically.
+                    </p>
+
+                    <p className="mt-5 text-sm font-medium text-red-400 transition group-hover:text-red-300">
+                      View full performance profile →
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 border-t border-zinc-800 bg-zinc-950/50 md:border-l md:border-t-0">
+                  <div className="border-b border-r border-zinc-800 p-5">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                      0–60
+                    </p>
+                    <p className="mt-2 text-2xl font-bold text-red-400">
+                      {featuredCar.zero_to_sixty}s
+                    </p>
+                  </div>
+
+                  <div className="border-b border-zinc-800 p-5">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                      Horsepower
+                    </p>
+                    <p className="mt-2 text-2xl font-bold text-white">
+                      {featuredCar.horsepower !== null
+                        ? `${featuredCar.horsepower.toLocaleString()} hp`
+                        : "N/A"}
+                    </p>
+                  </div>
+
+                  <div className="border-r border-zinc-800 p-5">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                      Torque
+                    </p>
+                    <p className="mt-2 text-xl font-bold text-white">
+                      {featuredCar.torque_lb_ft !== null
+                        ? `${featuredCar.torque_lb_ft.toLocaleString()} lb-ft`
+                        : "N/A"}
+                    </p>
+                  </div>
+
+                  <div className="p-5">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                      Price
+                    </p>
+                    <p className="mt-2 text-xl font-bold text-white">
+                      {featuredCar.price_usd !== null
+                        ? money(featuredCar.price_usd)
+                        : "N/A"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
         <Card className="mt-6 border-red-950 bg-zinc-900/70">
           <CardHeader>
             <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
@@ -514,7 +604,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
                     <th className="px-4 py-3">Car</th>
                     <th className="px-4 py-3">Year</th>
                     <th className="px-4 py-3">Horsepower</th>
-                    <th className="px-4 py-3">0–60</th>
+                    <th className="px-4 py-3">0鈥?0</th>
                     <th className="px-4 py-3">Price</th>
                   </tr>
                 </thead>
@@ -638,7 +728,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
           <Card className="border-zinc-800 bg-zinc-900/70">
             <CardHeader>
               <CardTitle className="text-white">
-                Horsepower vs. 0–60
+                Horsepower vs. 0鈥?0
               </CardTitle>
 
               <p className="text-sm text-zinc-500">
@@ -665,7 +755,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
                     <YAxis
                       type="number"
                       dataKey="zeroToSixty"
-                      name="0–60"
+                      name="0鈥?0"
                       reversed
                       stroke="#71717a"
                     />
@@ -693,7 +783,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
                             </p>
 
                             <p className="text-zinc-400">
-                              0–60: {point.zeroToSixty}s
+                              0鈥?0: {point.zeroToSixty}s
                             </p>
                           </div>
                         );
@@ -787,7 +877,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
               </div>
 
               <Badge className="w-fit border border-red-900 bg-red-950 text-red-300 hover:bg-red-950">
-                0–100 Score
+                0鈥?00 Score
               </Badge>
             </div>
           </CardHeader>
@@ -795,7 +885,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
           <CardContent>
             <div className="mb-5 rounded-lg border border-zinc-800 bg-zinc-950/60 p-4">
               <p className="text-sm leading-6 text-zinc-400">
-                The score weighs horsepower at 50%, 0–60 performance
+                The score weighs horsepower at 50%, 0鈥?0 performance
                 at 30%, and price at 20%. Higher scores represent
                 cars that combine stronger performance with lower
                 cost relative to the dataset.
@@ -810,7 +900,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
                     <th className="px-4 py-3">Car</th>
                     <th className="px-4 py-3">Year</th>
                     <th className="px-4 py-3">Horsepower</th>
-                    <th className="px-4 py-3">0–60</th>
+                    <th className="px-4 py-3">0鈥?0</th>
                     <th className="px-4 py-3">Price</th>
                     <th className="px-4 py-3">Score</th>
                   </tr>
@@ -924,7 +1014,7 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
 
                 <div className="rounded-lg border border-zinc-800 bg-zinc-900 p-4">
                   <p className="text-xs uppercase tracking-widest text-zinc-500">
-                    0–60
+                    0鈥?0
                   </p>
 
                   <p className="mt-2 text-2xl font-bold text-red-400">
@@ -977,3 +1067,5 @@ export default function Dashboard({ cars }: { cars: Car[] }) {
     </main>
   );
 }
+
+
