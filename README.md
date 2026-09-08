@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Performance Machines
 
-## Getting Started
+Performance Machines is an interactive automotive performance analytics dashboard built for DTSC 3601. The project explores horsepower, acceleration, pricing, and manufacturer trends across a dataset of high-performance cars from 1965 to 2023.
 
-First, run the development server:
+The dashboard was built with Next.js, TypeScript, Tailwind CSS, shadcn/ui, Recharts, Supabase, GitHub, and Vercel.
+
+## Project Features
+
+- Interactive manufacturer filter
+- Interactive model year filter
+- Summary statistics for:
+  - Cars shown
+  - Average horsepower
+  - Fastest 0-60 time
+  - Average price
+- Top 10 fastest cars ranking
+- Horsepower through the years line chart
+- Horsepower vs 0-60 scatter plot
+- Average horsepower by manufacturer bar chart
+- Performance Value ranking
+- Clickable car rows that open a detailed performance profile
+- Live data loaded from Supabase
+
+## Dataset
+
+The project uses the Sports Car Prices dataset from Kaggle.
+
+The original dataset contained 1,007 records. After cleaning the data and resolving duplicate make, model, and year combinations, the final Supabase table contains 262 unique vehicles.
+
+The main variables used in the dashboard include:
+
+- Car Make
+- Car Model
+- Year
+- Engine Size
+- Horsepower
+- Torque
+- 0-60 MPH Time
+- Price
+
+Some electric and hybrid vehicles do not have a traditional engine displacement value, so those records may display `N/A` for engine size.
+
+## Dashboard Overview
+
+![Performance Machines Dashboard](public/dashboard-overview.png)
+
+## Interactive Visualizations
+
+![Performance Machines Charts](public/dashboard-charts.png)
+
+## Technology Used
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Recharts
+- Supabase
+- GitHub
+- Vercel
+
+## Data Cleaning
+
+The original dataset contained several formatting issues, including values such as:
+
+- `1000+`
+- `1,000+`
+- `Electric`
+- `Hybrid`
+- `N/A`
+- Prices containing commas
+
+The dataset was cleaned before being loaded into Supabase. Numeric values were standardized where possible, invalid numeric values were converted to null, and duplicate vehicles were resolved by keeping one record for each make, model, and year combination.
+
+For duplicate make/model/year records, the vehicle with the fastest recorded 0-60 time was retained.
+
+## Supabase
+
+The cleaned data is stored in a Supabase table named:
+
+`cars_final`
+
+The dashboard connects to Supabase and loads the vehicle data directly into the application.
+
+## Running the Project Locally
+
+Install the project dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+npm install
