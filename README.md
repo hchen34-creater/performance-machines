@@ -88,3 +88,38 @@ Install the project dependencies:
 
 ```bash
 npm install
+## Screenshots
+
+### Dashboard Overview
+
+The main dashboard provides interactive filters, summary statistics, vehicle rankings, and performance information loaded from Supabase.
+
+![Performance Machines Dashboard](./public/screenshots/dashboard-overview.png)
+
+### Interactive Data Visualizations
+
+The dashboard includes interactive charts for horsepower trends, acceleration performance, and manufacturer comparisons.
+
+![Performance Machines Charts](./public/screenshots/dashboard-charts.png)
+
+## Modal API Testing
+
+The performance analysis API was deployed using Modal and tested using Postman.
+
+### API Health Check
+
+The deployed API responds successfully with a 200 OK status.
+
+![Modal API Health Check](./public/screenshots/PostmanSC.png)
+
+### Pipeline Endpoint
+
+The pipeline endpoint confirms that the performance analysis pipeline and model artifacts are available.
+
+![Modal Pipeline Endpoint](./public/screenshots/PostmanSC2.png)
+
+### Performance Score Endpoint
+
+A POST request sends horsepower, 0-60 time, and price to the deployed API. The API returns an anomaly distance based on the fitted performance-car reference data.
+
+![Modal Performance Score](./public/screenshots/PostmanSC3.png)
