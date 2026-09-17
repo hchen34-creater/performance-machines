@@ -123,3 +123,13 @@ The pipeline endpoint confirms that the performance analysis pipeline and model 
 A POST request sends horsepower, 0-60 time, and price to the deployed API. The API returns an anomaly distance based on the fitted performance-car reference data.
 
 ![Modal Performance Score](./public/screenshots/PostmanSC3.png)
+
+### Invalid Input Validation
+
+Invalid input is rejected by the API with a `422 Unprocessable Entity` response, confirming that the Pydantic validation bounds are working.
+
+![Modal Invalid Input Test](./public/screenshots/PostmanSC4.png)
+
+## Pipeline Model
+
+I chose an anomaly-distance model because I wanted to compare a car's performance to the other performance cars in the data rather than predict a specific label. The pipeline uses horsepower, 0-60 time, and price to calculate how far a car is from the fitted reference data. I also created a custom transformer called `PerformanceFeatureTransformer` that creates additional performance features before the data is scaled. The pipeline was built using scikit-learn version `1.9.1`.
